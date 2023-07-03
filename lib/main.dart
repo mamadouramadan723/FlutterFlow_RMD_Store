@@ -125,12 +125,11 @@ class _NavBarPageState extends State<NavBarPage> {
   @override
   Widget build(BuildContext context) {
     final tabs = {
-      'ProfilePage': ProfilePageWidget(),
       'HomePage': HomePageWidget(),
+      'ProfilePage': ProfilePageWidget(),
       'CheckoutPage': CheckoutPageWidget(),
       'CategoryPage': CategoryPageWidget(),
       'ProductPage': ProductPageWidget(),
-      'FavoritePage': FavoritePageWidget(),
     };
     final currentIndex = tabs.keys.toList().indexOf(_currentPageName);
 
@@ -149,7 +148,7 @@ class _NavBarPageState extends State<NavBarPage> {
           _currentPage = null;
           _currentPageName = tabs.keys.toList()[i];
         }),
-        backgroundColor: Colors.white,
+        backgroundColor: FlutterFlowTheme.of(context).primary,
         selectedItemColor: Color(0x00000000),
         unselectedItemColor: Color(0x00000000),
         selectedBackgroundColor: Color(0x00000000),
@@ -165,15 +164,13 @@ class _NavBarPageState extends State<NavBarPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Icon(
-                  currentIndex == 0
-                      ? Icons.account_circle_sharp
-                      : Icons.account_circle_outlined,
+                  currentIndex == 0 ? Icons.home : Icons.home_outlined,
                   color:
                       currentIndex == 0 ? Color(0x00000000) : Color(0x00000000),
                   size: 24.0,
                 ),
                 Text(
-                  'Profile',
+                  'Home',
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
                     color: currentIndex == 0
@@ -190,13 +187,15 @@ class _NavBarPageState extends State<NavBarPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Icon(
-                  currentIndex == 1 ? Icons.home : Icons.home_outlined,
+                  currentIndex == 1
+                      ? Icons.account_circle_sharp
+                      : Icons.account_circle_outlined,
                   color:
                       currentIndex == 1 ? Color(0x00000000) : Color(0x00000000),
                   size: 24.0,
                 ),
                 Text(
-                  'Home',
+                  'Profile',
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
                     color: currentIndex == 1
@@ -269,29 +268,6 @@ class _NavBarPageState extends State<NavBarPage> {
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
                     color: currentIndex == 4
-                        ? Color(0x00000000)
-                        : Color(0x00000000),
-                    fontSize: 11.0,
-                  ),
-                ),
-              ],
-            ),
-          ),
-          FloatingNavbarItem(
-            customWidget: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(
-                  currentIndex == 5 ? Icons.favorite : Icons.favorite_border,
-                  color:
-                      currentIndex == 5 ? Color(0x00000000) : Color(0x00000000),
-                  size: 24.0,
-                ),
-                Text(
-                  'Favorite',
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
-                    color: currentIndex == 5
                         ? Color(0x00000000)
                         : Color(0x00000000),
                     fontSize: 11.0,
