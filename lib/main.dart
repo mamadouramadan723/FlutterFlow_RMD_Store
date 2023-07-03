@@ -124,12 +124,12 @@ class _NavBarPageState extends State<NavBarPage> {
   @override
   Widget build(BuildContext context) {
     final tabs = {
-      'CheckoutPage': CheckoutPageWidget(),
-      'CategoryPage': CategoryPageWidget(),
-      'ProductPage': ProductPageWidget(),
       'HomePage': HomePageWidget(),
-      'ProfilePage': ProfilePageWidget(),
+      'ProductPage': ProductPageWidget(),
+      'CategoryPage': CategoryPageWidget(),
+      'CheckoutPage': CheckoutPageWidget(),
       'FavoritePage': FavoritePageWidget(),
+      'ProfilePage': ProfilePageWidget(),
     };
     final currentIndex = tabs.keys.toList().indexOf(_currentPageName);
 
@@ -150,18 +150,14 @@ class _NavBarPageState extends State<NavBarPage> {
         items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(
-              Icons.shopping_cart_checkout,
-              size: 24.0,
-            ),
-            label: 'Checkout',
-            tooltip: '',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(
               Icons.home_outlined,
               size: 24.0,
             ),
-            label: 'prods',
+            activeIcon: Icon(
+              Icons.home,
+              size: 24.0,
+            ),
+            label: 'Home',
             tooltip: '',
           ),
           BottomNavigationBarItem(
@@ -177,23 +173,15 @@ class _NavBarPageState extends State<NavBarPage> {
               Icons.home_outlined,
               size: 24.0,
             ),
-            activeIcon: Icon(
-              Icons.home,
-              size: 24.0,
-            ),
-            label: 'Home',
+            label: 'prods',
             tooltip: '',
           ),
           BottomNavigationBarItem(
             icon: Icon(
-              Icons.account_circle_outlined,
+              Icons.shopping_cart_checkout,
               size: 24.0,
             ),
-            activeIcon: Icon(
-              Icons.account_circle_sharp,
-              size: 24.0,
-            ),
-            label: 'Profile',
+            label: 'Checkout',
             tooltip: '',
           ),
           BottomNavigationBarItem(
@@ -206,6 +194,18 @@ class _NavBarPageState extends State<NavBarPage> {
               size: 24.0,
             ),
             label: 'Favorite',
+            tooltip: '',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.account_circle_outlined,
+              size: 24.0,
+            ),
+            activeIcon: Icon(
+              Icons.account_circle_sharp,
+              size: 24.0,
+            ),
+            label: 'Profile',
             tooltip: '',
           )
         ],
