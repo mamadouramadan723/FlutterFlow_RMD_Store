@@ -1,0 +1,18 @@
+{
+  "indexes": [
+    {
+      "collectionGroup": "favoriteProduct",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "userId",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "creationDate",
+          "order": "DESCENDING"
+        }
+      ]
+    }
+  ]
+}

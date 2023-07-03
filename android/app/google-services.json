@@ -1,0 +1,62 @@
+{
+  "project_info": {
+    "project_number": "1087039432055",
+    "project_id": "rmd-ff-project",
+    "storage_bucket": "rmd-ff-project.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1087039432055:android:ba9d3e7eff683cd645ad72",
+        "android_client_info": {
+          "package_name": "com.rmd.business.firebaseauth"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1087039432055-11itpkj7a09fhi4jav204uki06m8asvr.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.rmd.business.firebaseauth",
+            "certificate_hash": "9bbb3186b2189ef16d8f272bdab59362c395cbb4"
+          }
+        },
+        {
+          "client_id": "1087039432055-c8tphfsdo36cdp7u9c5d3j07oleid16b.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.rmd.business.firebaseauth",
+            "certificate_hash": "17f0c8af7ae54dc3eeb60209a63b1e6fc9de792f"
+          }
+        },
+        {
+          "client_id": "1087039432055-qp2a3m7reivo3uq1o58gp3a51s385tta.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBwBFO8tmARJ4ysPUcIiLsehAxGcuX46VE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1087039432055-ci9944866dei76f3ac7ortfkiqqsjkju.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1087039432055-u72jolvpl1d8tpjp6g6gt0fm3drkmiog.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.rmd.business.firebaseauth"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
