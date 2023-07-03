@@ -125,12 +125,12 @@ class _NavBarPageState extends State<NavBarPage> {
   @override
   Widget build(BuildContext context) {
     final tabs = {
-      'HomePage': HomePageWidget(),
       'CategoryPage': CategoryPageWidget(),
       'ProductPage': ProductPageWidget(),
       'CheckoutPage': CheckoutPageWidget(),
       'FavoritePage': FavoritePageWidget(),
       'ProfilePage': ProfilePageWidget(),
+      'HomePage': HomePageWidget(),
     };
     final currentIndex = tabs.keys.toList().indexOf(_currentPageName);
 
@@ -165,13 +165,13 @@ class _NavBarPageState extends State<NavBarPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Icon(
-                  currentIndex == 0 ? Icons.home : Icons.home_outlined,
+                  Icons.home_outlined,
                   color:
                       currentIndex == 0 ? Color(0x00000000) : Color(0x00000000),
                   size: 24.0,
                 ),
                 Text(
-                  'Home',
+                  'prods',
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
                     color: currentIndex == 0
@@ -194,7 +194,7 @@ class _NavBarPageState extends State<NavBarPage> {
                   size: 24.0,
                 ),
                 Text(
-                  'prods',
+                  'Produc',
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
                     color: currentIndex == 1
@@ -211,13 +211,13 @@ class _NavBarPageState extends State<NavBarPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Icon(
-                  Icons.home_outlined,
+                  Icons.shopping_cart_checkout,
                   color:
                       currentIndex == 2 ? Color(0x00000000) : Color(0x00000000),
                   size: 24.0,
                 ),
                 Text(
-                  'Produc',
+                  'Checkout',
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
                     color: currentIndex == 2
@@ -234,13 +234,13 @@ class _NavBarPageState extends State<NavBarPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Icon(
-                  Icons.shopping_cart_checkout,
+                  currentIndex == 3 ? Icons.favorite : Icons.favorite_border,
                   color:
                       currentIndex == 3 ? Color(0x00000000) : Color(0x00000000),
                   size: 24.0,
                 ),
                 Text(
-                  'Checkout',
+                  'Favorite',
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
                     color: currentIndex == 3
@@ -257,13 +257,15 @@ class _NavBarPageState extends State<NavBarPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Icon(
-                  currentIndex == 4 ? Icons.favorite : Icons.favorite_border,
+                  currentIndex == 4
+                      ? Icons.account_circle_sharp
+                      : Icons.account_circle_outlined,
                   color:
                       currentIndex == 4 ? Color(0x00000000) : Color(0x00000000),
                   size: 24.0,
                 ),
                 Text(
-                  'Favorite',
+                  'Profile',
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
                     color: currentIndex == 4
@@ -280,15 +282,13 @@ class _NavBarPageState extends State<NavBarPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Icon(
-                  currentIndex == 5
-                      ? Icons.account_circle_sharp
-                      : Icons.account_circle_outlined,
+                  currentIndex == 5 ? Icons.home : Icons.home_outlined,
                   color:
                       currentIndex == 5 ? Color(0x00000000) : Color(0x00000000),
                   size: 24.0,
                 ),
                 Text(
-                  'Profile',
+                  'Home',
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
                     color: currentIndex == 5
