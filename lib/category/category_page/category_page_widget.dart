@@ -158,7 +158,7 @@ class _CategoryPageWidgetState extends State<CategoryPageWidget> {
                   ),
                   Container(
                     width: double.infinity,
-                    height: 170.0,
+                    height: 100.0,
                     decoration: BoxDecoration(
                       color: FlutterFlowTheme.of(context).primaryBackground,
                     ),
@@ -207,7 +207,7 @@ class _CategoryPageWidgetState extends State<CategoryPageWidget> {
                                   });
                                 },
                                 child: Container(
-                                  width: 100.0,
+                                  width: 80.0,
                                   height: 80.0,
                                   decoration: BoxDecoration(
                                     color: FlutterFlowTheme.of(context)
@@ -223,9 +223,9 @@ class _CategoryPageWidgetState extends State<CategoryPageWidget> {
                                   ),
                                   child: Padding(
                                     padding: EdgeInsetsDirectional.fromSTEB(
-                                        12.0, 12.0, 12.0, 12.0),
+                                        2.0, 2.0, 2.0, 2.0),
                                     child: Column(
-                                      mainAxisSize: MainAxisSize.max,
+                                      mainAxisSize: MainAxisSize.min,
                                       mainAxisAlignment:
                                           MainAxisAlignment.center,
                                       children: [
@@ -234,8 +234,8 @@ class _CategoryPageWidgetState extends State<CategoryPageWidget> {
                                               BorderRadius.circular(50.0),
                                           child: Image.network(
                                             listViewCategoryRecord.imageUrl,
-                                            width: 60.0,
-                                            height: 60.0,
+                                            width: 50.0,
+                                            height: 50.0,
                                             fit: BoxFit.cover,
                                           ),
                                         ),
@@ -249,7 +249,8 @@ class _CategoryPageWidgetState extends State<CategoryPageWidget> {
                                                 .bodyMedium
                                                 .override(
                                                   fontFamily: 'Readex Pro',
-                                                  fontSize: 12.0,
+                                                  fontSize: 10.0,
+                                                  fontWeight: FontWeight.w300,
                                                 ),
                                           ),
                                         ),
