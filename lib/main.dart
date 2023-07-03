@@ -125,12 +125,12 @@ class _NavBarPageState extends State<NavBarPage> {
   @override
   Widget build(BuildContext context) {
     final tabs = {
-      'CategoryPage': CategoryPageWidget(),
-      'ProductPage': ProductPageWidget(),
-      'CheckoutPage': CheckoutPageWidget(),
-      'FavoritePage': FavoritePageWidget(),
       'ProfilePage': ProfilePageWidget(),
       'HomePage': HomePageWidget(),
+      'CheckoutPage': CheckoutPageWidget(),
+      'CategoryPage': CategoryPageWidget(),
+      'ProductPage': ProductPageWidget(),
+      'FavoritePage': FavoritePageWidget(),
     };
     final currentIndex = tabs.keys.toList().indexOf(_currentPageName);
 
@@ -165,13 +165,15 @@ class _NavBarPageState extends State<NavBarPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Icon(
-                  Icons.home_outlined,
+                  currentIndex == 0
+                      ? Icons.account_circle_sharp
+                      : Icons.account_circle_outlined,
                   color:
                       currentIndex == 0 ? Color(0x00000000) : Color(0x00000000),
                   size: 24.0,
                 ),
                 Text(
-                  'prods',
+                  'Profile',
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
                     color: currentIndex == 0
@@ -188,13 +190,13 @@ class _NavBarPageState extends State<NavBarPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Icon(
-                  Icons.home_outlined,
+                  currentIndex == 1 ? Icons.home : Icons.home_outlined,
                   color:
                       currentIndex == 1 ? Color(0x00000000) : Color(0x00000000),
                   size: 24.0,
                 ),
                 Text(
-                  'Produc',
+                  'Home',
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
                     color: currentIndex == 1
@@ -234,13 +236,13 @@ class _NavBarPageState extends State<NavBarPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Icon(
-                  currentIndex == 3 ? Icons.favorite : Icons.favorite_border,
+                  Icons.home_outlined,
                   color:
                       currentIndex == 3 ? Color(0x00000000) : Color(0x00000000),
                   size: 24.0,
                 ),
                 Text(
-                  'Favorite',
+                  'prods',
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
                     color: currentIndex == 3
@@ -257,15 +259,13 @@ class _NavBarPageState extends State<NavBarPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Icon(
-                  currentIndex == 4
-                      ? Icons.account_circle_sharp
-                      : Icons.account_circle_outlined,
+                  Icons.home_outlined,
                   color:
                       currentIndex == 4 ? Color(0x00000000) : Color(0x00000000),
                   size: 24.0,
                 ),
                 Text(
-                  'Profile',
+                  'Produc',
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
                     color: currentIndex == 4
@@ -282,13 +282,13 @@ class _NavBarPageState extends State<NavBarPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Icon(
-                  currentIndex == 5 ? Icons.home : Icons.home_outlined,
+                  currentIndex == 5 ? Icons.favorite : Icons.favorite_border,
                   color:
                       currentIndex == 5 ? Color(0x00000000) : Color(0x00000000),
                   size: 24.0,
                 ),
                 Text(
-                  'Home',
+                  'Favorite',
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
                     color: currentIndex == 5

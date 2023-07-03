@@ -91,7 +91,10 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           path: '/homePage',
           builder: (context, params) => params.isEmpty
               ? NavBarPage(initialPage: 'HomePage')
-              : HomePageWidget(),
+              : NavBarPage(
+                  initialPage: 'HomePage',
+                  page: HomePageWidget(),
+                ),
         ),
         FFRoute(
           name: 'LoginPage',
@@ -126,14 +129,20 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           path: '/checkoutPage',
           builder: (context, params) => params.isEmpty
               ? NavBarPage(initialPage: 'CheckoutPage')
-              : CheckoutPageWidget(),
+              : NavBarPage(
+                  initialPage: 'CheckoutPage',
+                  page: CheckoutPageWidget(),
+                ),
         ),
         FFRoute(
           name: 'FavoritePage',
           path: '/favoritePage',
           builder: (context, params) => params.isEmpty
               ? NavBarPage(initialPage: 'FavoritePage')
-              : FavoritePageWidget(),
+              : NavBarPage(
+                  initialPage: 'FavoritePage',
+                  page: FavoritePageWidget(),
+                ),
         ),
         FFRoute(
           name: 'ProductDetailPage',
@@ -148,14 +157,20 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           path: '/productPage',
           builder: (context, params) => params.isEmpty
               ? NavBarPage(initialPage: 'ProductPage')
-              : ProductPageWidget(),
+              : NavBarPage(
+                  initialPage: 'ProductPage',
+                  page: ProductPageWidget(),
+                ),
         ),
         FFRoute(
           name: 'CategoryPage',
           path: '/categoryPage',
           builder: (context, params) => params.isEmpty
               ? NavBarPage(initialPage: 'CategoryPage')
-              : CategoryPageWidget(),
+              : NavBarPage(
+                  initialPage: 'CategoryPage',
+                  page: CategoryPageWidget(),
+                ),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );
