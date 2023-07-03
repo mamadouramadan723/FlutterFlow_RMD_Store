@@ -124,11 +124,12 @@ class _NavBarPageState extends State<NavBarPage> {
   @override
   Widget build(BuildContext context) {
     final tabs = {
-      'HomePage': HomePageWidget(),
-      'ProfilePage': ProfilePageWidget(),
       'CheckoutPage': CheckoutPageWidget(),
       'CategoryPage': CategoryPageWidget(),
       'ProductPage': ProductPageWidget(),
+      'HomePage': HomePageWidget(),
+      'ProfilePage': ProfilePageWidget(),
+      'FavoritePage': FavoritePageWidget(),
     };
     final currentIndex = tabs.keys.toList().indexOf(_currentPageName);
 
@@ -147,6 +148,30 @@ class _NavBarPageState extends State<NavBarPage> {
         showUnselectedLabels: true,
         type: BottomNavigationBarType.fixed,
         items: <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.shopping_cart_checkout,
+              size: 24.0,
+            ),
+            label: 'Checkout',
+            tooltip: '',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.home_outlined,
+              size: 24.0,
+            ),
+            label: 'prods',
+            tooltip: '',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.home_outlined,
+              size: 24.0,
+            ),
+            label: 'Produc',
+            tooltip: '',
+          ),
           BottomNavigationBarItem(
             icon: Icon(
               Icons.home_outlined,
@@ -173,26 +198,14 @@ class _NavBarPageState extends State<NavBarPage> {
           ),
           BottomNavigationBarItem(
             icon: Icon(
-              Icons.shopping_cart_checkout,
+              Icons.favorite_border,
               size: 24.0,
             ),
-            label: 'Checkout',
-            tooltip: '',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.home_outlined,
+            activeIcon: Icon(
+              Icons.favorite,
               size: 24.0,
             ),
-            label: 'prods',
-            tooltip: '',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.home_outlined,
-              size: 24.0,
-            ),
-            label: 'Produc',
+            label: 'Favorite',
             tooltip: '',
           )
         ],
