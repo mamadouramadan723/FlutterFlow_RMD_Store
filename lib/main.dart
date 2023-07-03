@@ -15,7 +15,7 @@ import 'flutter_flow/internationalization.dart';
 import 'package:flutter/foundation.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:floating_bottom_navigation_bar/floating_bottom_navigation_bar.dart';
+import 'package:google_nav_bar/google_nav_bar.dart';
 import 'flutter_flow/nav/nav.dart';
 import 'index.dart';
 
@@ -142,148 +142,52 @@ class _NavBarPageState extends State<NavBarPage> {
     };
     final currentIndex = tabs.keys.toList().indexOf(_currentPageName);
 
-    final MediaQueryData queryData = MediaQuery.of(context);
-
     return Scaffold(
-      body: MediaQuery(
-          data: queryData
-              .removeViewInsets(removeBottom: true)
-              .removeViewPadding(removeBottom: true),
-          child: _currentPage ?? tabs[_currentPageName]!),
-      extendBody: true,
-      bottomNavigationBar: FloatingNavbar(
-        currentIndex: currentIndex,
-        onTap: (i) => setState(() {
+      body: _currentPage ?? tabs[_currentPageName],
+      bottomNavigationBar: GNav(
+        selectedIndex: currentIndex,
+        onTabChange: (i) => setState(() {
           _currentPage = null;
           _currentPageName = tabs.keys.toList()[i];
         }),
         backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
-        selectedItemColor: Color(0x00000000),
-        unselectedItemColor: Color(0x00000000),
-        selectedBackgroundColor: Color(0x00000000),
-        borderRadius: 8.0,
-        itemBorderRadius: 8.0,
-        margin: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+        color: Color(0x8A000000),
+        activeColor: FlutterFlowTheme.of(context).primary,
+        tabBackgroundColor: Color(0x00000000),
+        tabBorderRadius: 100.0,
+        tabMargin: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
         padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-        width: double.infinity,
-        elevation: 0.0,
-        items: [
-          FloatingNavbarItem(
-            customWidget: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(
-                  currentIndex == 0 ? Icons.home : Icons.home_outlined,
-                  color:
-                      currentIndex == 0 ? Color(0x00000000) : Color(0x00000000),
-                  size: 24.0,
-                ),
-                Text(
-                  'Home',
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
-                    color: currentIndex == 0
-                        ? Color(0x00000000)
-                        : Color(0x00000000),
-                    fontSize: 11.0,
-                  ),
-                ),
-              ],
-            ),
+        gap: 0.0,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        duration: Duration(milliseconds: 500),
+        haptic: false,
+        tabs: [
+          GButton(
+            icon: currentIndex == 0 ? Icons.home : Icons.home_outlined,
+            text: 'Home',
+            iconSize: 24.0,
           ),
-          FloatingNavbarItem(
-            customWidget: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(
-                  Icons.home_outlined,
-                  color:
-                      currentIndex == 1 ? Color(0x00000000) : Color(0x00000000),
-                  size: 24.0,
-                ),
-                Text(
-                  'prods',
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
-                    color: currentIndex == 1
-                        ? Color(0x00000000)
-                        : Color(0x00000000),
-                    fontSize: 11.0,
-                  ),
-                ),
-              ],
-            ),
+          GButton(
+            icon: Icons.home_outlined,
+            text: 'prods',
+            iconSize: 24.0,
           ),
-          FloatingNavbarItem(
-            customWidget: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(
-                  Icons.shopping_cart_checkout,
-                  color:
-                      currentIndex == 2 ? Color(0x00000000) : Color(0x00000000),
-                  size: 24.0,
-                ),
-                Text(
-                  'Checkout',
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
-                    color: currentIndex == 2
-                        ? Color(0x00000000)
-                        : Color(0x00000000),
-                    fontSize: 11.0,
-                  ),
-                ),
-              ],
-            ),
+          GButton(
+            icon: Icons.shopping_cart_checkout,
+            text: 'Checkout',
+            iconSize: 24.0,
           ),
-          FloatingNavbarItem(
-            customWidget: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(
-                  currentIndex == 3 ? Icons.favorite : Icons.favorite_border,
-                  color:
-                      currentIndex == 3 ? Color(0x00000000) : Color(0x00000000),
-                  size: 24.0,
-                ),
-                Text(
-                  'Favorite',
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
-                    color: currentIndex == 3
-                        ? Color(0x00000000)
-                        : Color(0x00000000),
-                    fontSize: 11.0,
-                  ),
-                ),
-              ],
-            ),
+          GButton(
+            icon: currentIndex == 3 ? Icons.favorite : Icons.favorite_border,
+            text: 'Favorite',
+            iconSize: 24.0,
           ),
-          FloatingNavbarItem(
-            customWidget: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(
-                  currentIndex == 4
-                      ? Icons.account_circle_sharp
-                      : Icons.account_circle_outlined,
-                  color:
-                      currentIndex == 4 ? Color(0x00000000) : Color(0x00000000),
-                  size: 24.0,
-                ),
-                Text(
-                  'Profile',
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
-                    color: currentIndex == 4
-                        ? Color(0x00000000)
-                        : Color(0x00000000),
-                    fontSize: 11.0,
-                  ),
-                ),
-              ],
-            ),
+          GButton(
+            icon: currentIndex == 4
+                ? Icons.account_circle_sharp
+                : Icons.account_circle_outlined,
+            text: 'Profile',
+            iconSize: 24.0,
           )
         ],
       ),
