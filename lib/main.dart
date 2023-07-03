@@ -15,7 +15,6 @@ import 'flutter_flow/internationalization.dart';
 import 'package:flutter/foundation.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:floating_bottom_navigation_bar/floating_bottom_navigation_bar.dart';
 import 'flutter_flow/nav/nav.dart';
 import 'index.dart';
 
@@ -126,155 +125,88 @@ class _NavBarPageState extends State<NavBarPage> {
   Widget build(BuildContext context) {
     final tabs = {
       'HomePage': HomePageWidget(),
-      'ProfilePage': ProfilePageWidget(),
-      'CheckoutPage': CheckoutPageWidget(),
-      'CategoryPage': CategoryPageWidget(),
       'ProductPage': ProductPageWidget(),
+      'CategoryPage': CategoryPageWidget(),
+      'CheckoutPage': CheckoutPageWidget(),
+      'FavoritePage': FavoritePageWidget(),
+      'ProfilePage': ProfilePageWidget(),
     };
     final currentIndex = tabs.keys.toList().indexOf(_currentPageName);
 
-    final MediaQueryData queryData = MediaQuery.of(context);
-
     return Scaffold(
-      body: MediaQuery(
-          data: queryData
-              .removeViewInsets(removeBottom: true)
-              .removeViewPadding(removeBottom: true),
-          child: _currentPage ?? tabs[_currentPageName]!),
-      extendBody: true,
-      bottomNavigationBar: FloatingNavbar(
+      body: _currentPage ?? tabs[_currentPageName],
+      bottomNavigationBar: BottomNavigationBar(
         currentIndex: currentIndex,
         onTap: (i) => setState(() {
           _currentPage = null;
           _currentPageName = tabs.keys.toList()[i];
         }),
-        backgroundColor: FlutterFlowTheme.of(context).primary,
-        selectedItemColor: Color(0x00000000),
-        unselectedItemColor: Color(0x00000000),
-        selectedBackgroundColor: Color(0x00000000),
-        borderRadius: 8.0,
-        itemBorderRadius: 8.0,
-        margin: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-        padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-        width: double.infinity,
-        elevation: 0.0,
-        items: [
-          FloatingNavbarItem(
-            customWidget: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(
-                  currentIndex == 0 ? Icons.home : Icons.home_outlined,
-                  color:
-                      currentIndex == 0 ? Color(0x00000000) : Color(0x00000000),
-                  size: 24.0,
-                ),
-                Text(
-                  'Home',
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
-                    color: currentIndex == 0
-                        ? Color(0x00000000)
-                        : Color(0x00000000),
-                    fontSize: 11.0,
-                  ),
-                ),
-              ],
+        backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
+        selectedItemColor: FlutterFlowTheme.of(context).primary,
+        unselectedItemColor: Color(0x8A000000),
+        showSelectedLabels: true,
+        showUnselectedLabels: true,
+        type: BottomNavigationBarType.fixed,
+        items: <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.home_outlined,
+              size: 24.0,
             ),
+            activeIcon: Icon(
+              Icons.home,
+              size: 24.0,
+            ),
+            label: 'Home',
+            tooltip: '',
           ),
-          FloatingNavbarItem(
-            customWidget: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(
-                  currentIndex == 1
-                      ? Icons.account_circle_sharp
-                      : Icons.account_circle_outlined,
-                  color:
-                      currentIndex == 1 ? Color(0x00000000) : Color(0x00000000),
-                  size: 24.0,
-                ),
-                Text(
-                  'Profile',
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
-                    color: currentIndex == 1
-                        ? Color(0x00000000)
-                        : Color(0x00000000),
-                    fontSize: 11.0,
-                  ),
-                ),
-              ],
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.home_outlined,
+              size: 24.0,
             ),
+            label: 'Produc',
+            tooltip: '',
           ),
-          FloatingNavbarItem(
-            customWidget: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(
-                  Icons.shopping_cart_checkout,
-                  color:
-                      currentIndex == 2 ? Color(0x00000000) : Color(0x00000000),
-                  size: 24.0,
-                ),
-                Text(
-                  'Checkout',
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
-                    color: currentIndex == 2
-                        ? Color(0x00000000)
-                        : Color(0x00000000),
-                    fontSize: 11.0,
-                  ),
-                ),
-              ],
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.home_outlined,
+              size: 24.0,
             ),
+            label: 'prods',
+            tooltip: '',
           ),
-          FloatingNavbarItem(
-            customWidget: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(
-                  Icons.home_outlined,
-                  color:
-                      currentIndex == 3 ? Color(0x00000000) : Color(0x00000000),
-                  size: 24.0,
-                ),
-                Text(
-                  'prods',
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
-                    color: currentIndex == 3
-                        ? Color(0x00000000)
-                        : Color(0x00000000),
-                    fontSize: 11.0,
-                  ),
-                ),
-              ],
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.shopping_cart_checkout,
+              size: 24.0,
             ),
+            label: 'Checkout',
+            tooltip: '',
           ),
-          FloatingNavbarItem(
-            customWidget: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(
-                  Icons.home_outlined,
-                  color:
-                      currentIndex == 4 ? Color(0x00000000) : Color(0x00000000),
-                  size: 24.0,
-                ),
-                Text(
-                  'Produc',
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
-                    color: currentIndex == 4
-                        ? Color(0x00000000)
-                        : Color(0x00000000),
-                    fontSize: 11.0,
-                  ),
-                ),
-              ],
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.favorite_border,
+              size: 24.0,
             ),
+            activeIcon: Icon(
+              Icons.favorite,
+              size: 24.0,
+            ),
+            label: 'Favorite',
+            tooltip: '',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.account_circle_outlined,
+              size: 24.0,
+            ),
+            activeIcon: Icon(
+              Icons.account_circle_sharp,
+              size: 24.0,
+            ),
+            label: 'Profile',
+            tooltip: '',
           )
         ],
       ),

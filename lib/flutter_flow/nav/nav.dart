@@ -119,7 +119,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
         FFRoute(
           name: 'ProfilePage',
           path: '/profilePage',
-          requireAuth: true,
           builder: (context, params) => params.isEmpty
               ? NavBarPage(initialPage: 'ProfilePage')
               : ProfilePageWidget(),
@@ -137,7 +136,9 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
         FFRoute(
           name: 'FavoritePage',
           path: '/favoritePage',
-          builder: (context, params) => FavoritePageWidget(),
+          builder: (context, params) => params.isEmpty
+              ? NavBarPage(initialPage: 'FavoritePage')
+              : FavoritePageWidget(),
         ),
         FFRoute(
           name: 'ProductDetailPage',
