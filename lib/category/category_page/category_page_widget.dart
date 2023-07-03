@@ -241,6 +241,7 @@ class _CategoryPageWidgetState extends State<CategoryPageWidget> {
                                             0.0, 4.0, 0.0, 0.0),
                                         child: Text(
                                           listViewCategoryRecord.name,
+                                          textAlign: TextAlign.center,
                                           style: FlutterFlowTheme.of(context)
                                               .bodyMedium
                                               .override(
