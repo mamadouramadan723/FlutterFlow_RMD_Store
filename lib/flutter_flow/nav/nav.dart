@@ -78,23 +78,20 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
       debugLogDiagnostics: true,
       refreshListenable: appStateNotifier,
       errorBuilder: (context, state) =>
-          appStateNotifier.loggedIn ? NavBarPage() : FavoritePageWidget(),
+          appStateNotifier.loggedIn ? NavBarPage() : HomePageWidget(),
       routes: [
         FFRoute(
           name: '_initialize',
           path: '/',
           builder: (context, _) =>
-              appStateNotifier.loggedIn ? NavBarPage() : FavoritePageWidget(),
+              appStateNotifier.loggedIn ? NavBarPage() : HomePageWidget(),
         ),
         FFRoute(
           name: 'HomePage',
           path: '/homePage',
           builder: (context, params) => params.isEmpty
               ? NavBarPage(initialPage: 'HomePage')
-              : NavBarPage(
-                  initialPage: 'HomePage',
-                  page: HomePageWidget(),
-                ),
+              : HomePageWidget(),
         ),
         FFRoute(
           name: 'LoginPage',
@@ -128,10 +125,7 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           path: '/checkoutPage',
           builder: (context, params) => params.isEmpty
               ? NavBarPage(initialPage: 'CheckoutPage')
-              : NavBarPage(
-                  initialPage: 'CheckoutPage',
-                  page: CheckoutPageWidget(),
-                ),
+              : CheckoutPageWidget(),
         ),
         FFRoute(
           name: 'FavoritePage',
@@ -153,20 +147,14 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           path: '/productPage',
           builder: (context, params) => params.isEmpty
               ? NavBarPage(initialPage: 'ProductPage')
-              : NavBarPage(
-                  initialPage: 'ProductPage',
-                  page: ProductPageWidget(),
-                ),
+              : ProductPageWidget(),
         ),
         FFRoute(
           name: 'CategoryPage',
           path: '/categoryPage',
           builder: (context, params) => params.isEmpty
               ? NavBarPage(initialPage: 'CategoryPage')
-              : NavBarPage(
-                  initialPage: 'CategoryPage',
-                  page: CategoryPageWidget(),
-                ),
+              : CategoryPageWidget(),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );
@@ -333,7 +321,7 @@ class FFRoute {
 
           if (requireAuth && !appStateNotifier.loggedIn) {
             appStateNotifier.setRedirectLocationIfUnset(state.location);
-            return '/favoritePage';
+            return '/homePage';
           }
           return null;
         },
