@@ -91,10 +91,7 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           path: '/homePage',
           builder: (context, params) => params.isEmpty
               ? NavBarPage(initialPage: 'HomePage')
-              : NavBarPage(
-                  initialPage: 'HomePage',
-                  page: HomePageWidget(),
-                ),
+              : HomePageWidget(),
         ),
         FFRoute(
           name: 'LoginPage',
@@ -121,59 +118,41 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           path: '/profilePage',
           builder: (context, params) => params.isEmpty
               ? NavBarPage(initialPage: 'ProfilePage')
-              : NavBarPage(
-                  initialPage: 'ProfilePage',
-                  page: ProfilePageWidget(),
-                ),
+              : ProfilePageWidget(),
         ),
         FFRoute(
           name: 'CheckoutPage',
           path: '/checkoutPage',
           builder: (context, params) => params.isEmpty
               ? NavBarPage(initialPage: 'CheckoutPage')
-              : NavBarPage(
-                  initialPage: 'CheckoutPage',
-                  page: CheckoutPageWidget(),
-                ),
+              : CheckoutPageWidget(),
         ),
         FFRoute(
           name: 'FavoritePage',
           path: '/favoritePage',
           builder: (context, params) => params.isEmpty
               ? NavBarPage(initialPage: 'FavoritePage')
-              : NavBarPage(
-                  initialPage: 'FavoritePage',
-                  page: FavoritePageWidget(),
-                ),
+              : FavoritePageWidget(),
         ),
         FFRoute(
           name: 'ProductDetailPage',
           path: '/productDetailPage',
-          builder: (context, params) => NavBarPage(
-            initialPage: '',
-            page: ProductDetailPageWidget(
-              productRef: params.getParam('productRef',
-                  ParamType.DocumentReference, false, ['product']),
-            ),
+          builder: (context, params) => ProductDetailPageWidget(
+            productRef: params.getParam(
+                'productRef', ParamType.DocumentReference, false, ['product']),
           ),
         ),
         FFRoute(
           name: 'ProductPage',
           path: '/productPage',
-          builder: (context, params) => NavBarPage(
-            initialPage: '',
-            page: ProductPageWidget(),
-          ),
+          builder: (context, params) => ProductPageWidget(),
         ),
         FFRoute(
           name: 'CategoryPage',
           path: '/categoryPage',
           builder: (context, params) => params.isEmpty
               ? NavBarPage(initialPage: 'CategoryPage')
-              : NavBarPage(
-                  initialPage: 'CategoryPage',
-                  page: CategoryPageWidget(),
-                ),
+              : CategoryPageWidget(),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );

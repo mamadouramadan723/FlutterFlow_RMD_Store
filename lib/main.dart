@@ -15,7 +15,6 @@ import 'flutter_flow/internationalization.dart';
 import 'package:flutter/foundation.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:google_nav_bar/google_nav_bar.dart';
 import 'flutter_flow/nav/nav.dart';
 import 'index.dart';
 
@@ -144,50 +143,70 @@ class _NavBarPageState extends State<NavBarPage> {
 
     return Scaffold(
       body: _currentPage ?? tabs[_currentPageName],
-      bottomNavigationBar: GNav(
-        selectedIndex: currentIndex,
-        onTabChange: (i) => setState(() {
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: currentIndex,
+        onTap: (i) => setState(() {
           _currentPage = null;
           _currentPageName = tabs.keys.toList()[i];
         }),
         backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
-        color: Color(0x8A000000),
-        activeColor: FlutterFlowTheme.of(context).primary,
-        tabBackgroundColor: Color(0x00000000),
-        tabBorderRadius: 100.0,
-        tabMargin: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-        padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-        gap: 0.0,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        duration: Duration(milliseconds: 500),
-        haptic: false,
-        tabs: [
-          GButton(
-            icon: currentIndex == 0 ? Icons.home : Icons.home_outlined,
-            text: 'Home',
-            iconSize: 24.0,
+        selectedItemColor: FlutterFlowTheme.of(context).primary,
+        unselectedItemColor: Color(0x8A000000),
+        showSelectedLabels: true,
+        showUnselectedLabels: true,
+        type: BottomNavigationBarType.fixed,
+        items: <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.home_outlined,
+              size: 24.0,
+            ),
+            activeIcon: Icon(
+              Icons.home,
+              size: 24.0,
+            ),
+            label: 'Home',
+            tooltip: '',
           ),
-          GButton(
-            icon: Icons.home_outlined,
-            text: 'prods',
-            iconSize: 24.0,
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.home_outlined,
+              size: 24.0,
+            ),
+            label: 'prods',
+            tooltip: '',
           ),
-          GButton(
-            icon: Icons.shopping_cart_checkout,
-            text: 'Checkout',
-            iconSize: 24.0,
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.shopping_cart_checkout,
+              size: 24.0,
+            ),
+            label: 'Checkout',
+            tooltip: '',
           ),
-          GButton(
-            icon: currentIndex == 3 ? Icons.favorite : Icons.favorite_border,
-            text: 'Favorite',
-            iconSize: 24.0,
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.favorite_border,
+              size: 24.0,
+            ),
+            activeIcon: Icon(
+              Icons.favorite,
+              size: 24.0,
+            ),
+            label: 'Favorite',
+            tooltip: '',
           ),
-          GButton(
-            icon: currentIndex == 4
-                ? Icons.account_circle_sharp
-                : Icons.account_circle_outlined,
-            text: 'Profile',
-            iconSize: 24.0,
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.account_circle_outlined,
+              size: 24.0,
+            ),
+            activeIcon: Icon(
+              Icons.account_circle_sharp,
+              size: 24.0,
+            ),
+            label: 'Profile',
+            tooltip: '',
           )
         ],
       ),
