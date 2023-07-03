@@ -170,7 +170,7 @@ class _NavBarPageState extends State<NavBarPage> {
           ),
           GButton(
             icon: Icons.home_outlined,
-            text: 'Produc',
+            text: 'Product',
             iconSize: 24.0,
           ),
           GButton(
