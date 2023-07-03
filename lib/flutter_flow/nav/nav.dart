@@ -160,12 +160,10 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
         FFRoute(
           name: 'ProductPage',
           path: '/productPage',
-          builder: (context, params) => params.isEmpty
-              ? NavBarPage(initialPage: 'ProductPage')
-              : NavBarPage(
-                  initialPage: 'ProductPage',
-                  page: ProductPageWidget(),
-                ),
+          builder: (context, params) => NavBarPage(
+            initialPage: '',
+            page: ProductPageWidget(),
+          ),
         ),
         FFRoute(
           name: 'CategoryPage',

@@ -135,7 +135,6 @@ class _NavBarPageState extends State<NavBarPage> {
   Widget build(BuildContext context) {
     final tabs = {
       'HomePage': HomePageWidget(),
-      'ProductPage': ProductPageWidget(),
       'CategoryPage': CategoryPageWidget(),
       'CheckoutPage': CheckoutPageWidget(),
       'FavoritePage': FavoritePageWidget(),
@@ -203,7 +202,7 @@ class _NavBarPageState extends State<NavBarPage> {
                   size: 24.0,
                 ),
                 Text(
-                  'Product',
+                  'prods',
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
                     color: currentIndex == 1
@@ -220,13 +219,13 @@ class _NavBarPageState extends State<NavBarPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Icon(
-                  Icons.home_outlined,
+                  Icons.shopping_cart_checkout,
                   color:
                       currentIndex == 2 ? Color(0x00000000) : Color(0x00000000),
                   size: 24.0,
                 ),
                 Text(
-                  'prods',
+                  'Checkout',
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
                     color: currentIndex == 2
@@ -243,13 +242,13 @@ class _NavBarPageState extends State<NavBarPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Icon(
-                  Icons.shopping_cart_checkout,
+                  currentIndex == 3 ? Icons.favorite : Icons.favorite_border,
                   color:
                       currentIndex == 3 ? Color(0x00000000) : Color(0x00000000),
                   size: 24.0,
                 ),
                 Text(
-                  'Checkout',
+                  'Favorite',
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
                     color: currentIndex == 3
@@ -266,41 +265,18 @@ class _NavBarPageState extends State<NavBarPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Icon(
-                  currentIndex == 4 ? Icons.favorite : Icons.favorite_border,
-                  color:
-                      currentIndex == 4 ? Color(0x00000000) : Color(0x00000000),
-                  size: 24.0,
-                ),
-                Text(
-                  'Favorite',
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
-                    color: currentIndex == 4
-                        ? Color(0x00000000)
-                        : Color(0x00000000),
-                    fontSize: 11.0,
-                  ),
-                ),
-              ],
-            ),
-          ),
-          FloatingNavbarItem(
-            customWidget: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(
-                  currentIndex == 5
+                  currentIndex == 4
                       ? Icons.account_circle_sharp
                       : Icons.account_circle_outlined,
                   color:
-                      currentIndex == 5 ? Color(0x00000000) : Color(0x00000000),
+                      currentIndex == 4 ? Color(0x00000000) : Color(0x00000000),
                   size: 24.0,
                 ),
                 Text(
                   'Profile',
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
-                    color: currentIndex == 5
+                    color: currentIndex == 4
                         ? Color(0x00000000)
                         : Color(0x00000000),
                     fontSize: 11.0,
