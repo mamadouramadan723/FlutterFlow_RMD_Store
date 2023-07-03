@@ -99,10 +99,7 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
         FFRoute(
           name: 'LoginPage',
           path: '/loginPage',
-          builder: (context, params) => NavBarPage(
-            initialPage: '',
-            page: LoginPageWidget(),
-          ),
+          builder: (context, params) => LoginPageWidget(),
         ),
         FFRoute(
           name: 'PhoneLoginPage',
