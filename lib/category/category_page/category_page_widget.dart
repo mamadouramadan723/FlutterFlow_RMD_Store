@@ -284,7 +284,11 @@ class _CategoryPageWidgetState extends State<CategoryPageWidget> {
                 ),
                 Expanded(
                   child: StreamBuilder<List<ItemCategoryRecord>>(
-                    stream: queryItemCategoryRecord(),
+                    stream: queryItemCategoryRecord(
+                      queryBuilder: (itemCategoryRecord) =>
+                          itemCategoryRecord.where('id',
+                              isEqualTo: FFAppState().selectedCategory),
+                    ),
                     builder: (context, snapshot) {
                       // Customize what your widget looks like when it's loading.
                       if (!snapshot.hasData) {
