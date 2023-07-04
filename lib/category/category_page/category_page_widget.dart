@@ -286,7 +286,7 @@ class _CategoryPageWidgetState extends State<CategoryPageWidget> {
                   child: StreamBuilder<List<ItemCategoryRecord>>(
                     stream: queryItemCategoryRecord(
                       queryBuilder: (itemCategoryRecord) =>
-                          itemCategoryRecord.where('id',
+                          itemCategoryRecord.where('categoryId',
                               isEqualTo: FFAppState().selectedCategory),
                     ),
                     builder: (context, snapshot) {
