@@ -324,7 +324,7 @@ class _CategoryPageWidgetState extends State<CategoryPageWidget> {
                                     minHeight: 100.0,
                                     maxWidth:
                                         MediaQuery.sizeOf(context).width * 1.0,
-                                    maxHeight: 600.0,
+                                    maxHeight: 450.0,
                                   ),
                                   decoration: BoxDecoration(
                                     color: FlutterFlowTheme.of(context)
