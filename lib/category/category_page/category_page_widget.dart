@@ -319,8 +319,13 @@ class _CategoryPageWidgetState extends State<CategoryPageWidget> {
                                     listViewItemCategoryRecordList[
                                         listViewIndex];
                                 return Container(
-                                  width: 100.0,
-                                  height: 100.0,
+                                  width: MediaQuery.sizeOf(context).width * 1.0,
+                                  constraints: BoxConstraints(
+                                    minHeight: 100.0,
+                                    maxWidth:
+                                        MediaQuery.sizeOf(context).width * 1.0,
+                                    maxHeight: 600.0,
+                                  ),
                                   decoration: BoxDecoration(
                                     color: FlutterFlowTheme.of(context)
                                         .secondaryBackground,
