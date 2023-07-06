@@ -361,8 +361,8 @@ class _CategoryPageWidgetState extends State<CategoryPageWidget> {
                                             gridDelegate:
                                                 SliverGridDelegateWithFixedCrossAxisCount(
                                               crossAxisCount: 3,
-                                              crossAxisSpacing: 10.0,
-                                              mainAxisSpacing: 10.0,
+                                              crossAxisSpacing: 1.0,
+                                              mainAxisSpacing: 1.0,
                                               childAspectRatio: 1.0,
                                             ),
                                             shrinkWrap: true,
