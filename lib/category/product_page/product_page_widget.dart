@@ -100,7 +100,11 @@ class _ProductPageWidgetState extends State<ProductPageWidget> {
                 mainAxisSize: MainAxisSize.max,
                 children: [
                   StreamBuilder<List<ProductRecord>>(
-                    stream: queryProductRecord(),
+                    stream: queryProductRecord(
+                      queryBuilder: (productRecord) => productRecord.where(
+                          'subCategoryRef',
+                          isEqualTo: widget.subCategoryRef),
+                    ),
                     builder: (context, snapshot) {
                       // Customize what your widget looks like when it's loading.
                       if (!snapshot.hasData) {
