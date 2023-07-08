@@ -5,8 +5,8 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_toggle_icon.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'product_page_model.dart';
@@ -35,6 +35,24 @@ class _ProductPageWidgetState extends State<ProductPageWidget> {
     _model = createModel(context, () => ProductPageModel());
 
     logFirebaseEvent('screen_view', parameters: {'screen_name': 'ProductPage'});
+    // On page load action.
+    SchedulerBinding.instance.addPostFrameCallback((_) async {
+      logFirebaseEvent('PRODUCT_ProductPage_ON_INIT_STATE');
+      logFirebaseEvent('ProductPage_show_snack_bar');
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            widget.subCategoryRef!.id,
+            style: TextStyle(
+              color: FlutterFlowTheme.of(context).primaryText,
+            ),
+          ),
+          duration: Duration(milliseconds: 4000),
+          backgroundColor: FlutterFlowTheme.of(context).secondary,
+        ),
+      );
+    });
+
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
@@ -105,43 +123,7 @@ class _ProductPageWidgetState extends State<ProductPageWidget> {
                       queryBuilder: (productRecord) => productRecord.where(
                           'subCategoryRef',
                           isEqualTo: widget.subCategoryRef),
-                    )..listen((snapshot) {
-                        List<ProductRecord> listViewProductRecordList =
-                            snapshot;
-                        if (_model.listViewProductRecordListPreviousSnapshot !=
-                                null &&
-                            !const ListEquality(ProductRecordDocumentEquality())
-                                .equals(
-                                    listViewProductRecordList,
-                                    _model
-                                        .listViewProductRecordListPreviousSnapshot)) {
-                          logFirebaseEvent(
-                              'PRODUCT_ListView_oavvzya7_ON_DATA_CHANGE');
-                          logFirebaseEvent('ListView_show_snack_bar');
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                              content: Text(
-                                listViewProductRecordList
-                                    .take(5)
-                                    .toList()
-                                    .first
-                                    .description,
-                                style: TextStyle(
-                                  color:
-                                      FlutterFlowTheme.of(context).primaryText,
-                                ),
-                              ),
-                              duration: Duration(milliseconds: 4000),
-                              backgroundColor:
-                                  FlutterFlowTheme.of(context).secondary,
-                            ),
-                          );
-
-                          setState(() {});
-                        }
-                        _model.listViewProductRecordListPreviousSnapshot =
-                            snapshot;
-                      }),
+                    ),
                     builder: (context, snapshot) {
                       // Customize what your widget looks like when it's loading.
                       if (!snapshot.hasData) {
