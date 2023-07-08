@@ -437,7 +437,8 @@ class _CategoryPageWidgetState extends State<CategoryPageWidget> {
                                                               ),
                                                               'subCategoryName':
                                                                   serializeParam(
-                                                                '',
+                                                                gridViewSubCategoryRecord
+                                                                    .name,
                                                                 ParamType
                                                                     .String,
                                                               ),
