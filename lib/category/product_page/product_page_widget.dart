@@ -203,7 +203,8 @@ class _ProductPageWidgetState extends State<ProductPageWidget> {
                                                       BorderRadius.circular(
                                                           10.0),
                                                   child: Image.network(
-                                                    listViewProductRecord.image,
+                                                    listViewProductRecord
+                                                        .imageUrl,
                                                     width: double.infinity,
                                                     height: 260.0,
                                                     fit: BoxFit.cover,

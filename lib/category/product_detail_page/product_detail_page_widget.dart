@@ -94,7 +94,7 @@ class _ProductDetailPageWidgetState extends State<ProductDetailPageWidget> {
                               alignment: AlignmentDirectional(0.0, 0.0),
                               children: [
                                 Image.network(
-                                  productDetailPageProductRecord.image,
+                                  productDetailPageProductRecord.imageUrl,
                                   width: double.infinity,
                                   height: double.infinity,
                                   fit: BoxFit.contain,

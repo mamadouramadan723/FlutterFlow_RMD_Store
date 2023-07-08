@@ -165,7 +165,8 @@ class _FavoritePageWidgetState extends State<FavoritePageWidget> {
                                                 borderRadius:
                                                     BorderRadius.circular(12.0),
                                                 child: Image.network(
-                                                  menuItemProductRecord.image,
+                                                  menuItemProductRecord
+                                                      .imageUrl,
                                                   width: 70.0,
                                                   height: 100.0,
                                                   fit: BoxFit.cover,

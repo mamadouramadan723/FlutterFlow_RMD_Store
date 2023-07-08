@@ -36,11 +36,6 @@ class ProductRecord extends FirestoreRecord {
   List<String> get marques => _marques ?? const [];
   bool hasMarques() => _marques != null;
 
-  // "image" field.
-  String? _image;
-  String get image => _image ?? '';
-  bool hasImage() => _image != null;
-
   // "moreImages" field.
   List<String>? _moreImages;
   List<String> get moreImages => _moreImages ?? const [];
@@ -96,7 +91,6 @@ class ProductRecord extends FirestoreRecord {
     _name = snapshotData['name'] as String?;
     _description = snapshotData['description'] as String?;
     _marques = getDataList(snapshotData['marques']);
-    _image = snapshotData['image'] as String?;
     _moreImages = getDataList(snapshotData['moreImages']);
     _subCategoryRef = snapshotData['subCategoryRef'] as DocumentReference?;
     _quantity = castToType<int>(snapshotData['quantity']);
@@ -147,7 +141,6 @@ Map<String, dynamic> createProductRecordData({
   int? id,
   String? name,
   String? description,
-  String? image,
   DocumentReference? subCategoryRef,
   int? quantity,
   double? price,
@@ -162,7 +155,6 @@ Map<String, dynamic> createProductRecordData({
       'id': id,
       'name': name,
       'description': description,
-      'image': image,
       'subCategoryRef': subCategoryRef,
       'quantity': quantity,
       'price': price,
@@ -193,7 +185,6 @@ class ProductRecordDocumentEquality implements Equality<ProductRecord> {
         e1?.name == e2?.name &&
         e1?.description == e2?.description &&
         listEquality.equals(e1?.marques, e2?.marques) &&
-        e1?.image == e2?.image &&
         listEquality.equals(e1?.moreImages, e2?.moreImages) &&
         e1?.subCategoryRef == e2?.subCategoryRef &&
         e1?.quantity == e2?.quantity &&
@@ -212,7 +203,6 @@ class ProductRecordDocumentEquality implements Equality<ProductRecord> {
         e?.name,
         e?.description,
         e?.marques,
-        e?.image,
         e?.moreImages,
         e?.subCategoryRef,
         e?.quantity,
