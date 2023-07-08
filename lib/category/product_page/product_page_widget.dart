@@ -119,11 +119,7 @@ class _ProductPageWidgetState extends State<ProductPageWidget> {
                   final columnFavoriteProductRecord =
                       columnFavoriteProductRecordList[columnIndex];
                   return StreamBuilder<List<ProductRecord>>(
-                    stream: queryProductRecord(
-                      queryBuilder: (productRecord) => productRecord.where(
-                          'subCategoryRef',
-                          isEqualTo: widget.subCategoryRef),
-                    ),
+                    stream: queryProductRecord(),
                     builder: (context, snapshot) {
                       // Customize what your widget looks like when it's loading.
                       if (!snapshot.hasData) {
