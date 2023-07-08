@@ -8,6 +8,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:provider/provider.dart';
 import 'product_page_model.dart';
 export 'product_page_model.dart';
@@ -118,278 +119,324 @@ class _ProductPageWidgetState extends State<ProductPageWidget> {
                     (columnIndex) {
                   final columnFavoriteProductRecord =
                       columnFavoriteProductRecordList[columnIndex];
-                  return StreamBuilder<List<ProductRecord>>(
-                    stream: queryProductRecord(),
-                    builder: (context, snapshot) {
-                      // Customize what your widget looks like when it's loading.
-                      if (!snapshot.hasData) {
-                        return Center(
-                          child: SizedBox(
-                            width: 50.0,
-                            height: 50.0,
-                            child: CircularProgressIndicator(
-                              color: FlutterFlowTheme.of(context).primary,
-                            ),
-                          ),
-                        );
+                  return PagedListView<DocumentSnapshot<Object?>?,
+                      ProductRecord>(
+                    pagingController: () {
+                      final Query<Object?> Function(Query<Object?>)
+                          queryBuilder = (productRecord) => productRecord;
+                      if (_model.pagingController != null) {
+                        final query = queryBuilder(ProductRecord.collection);
+                        if (query != _model.pagingQuery) {
+                          // The query has changed
+                          _model.pagingQuery = query;
+                          _model.streamSubscriptions
+                              .forEach((s) => s?.cancel());
+                          _model.streamSubscriptions.clear();
+                          _model.pagingController!.refresh();
+                        }
+                        return _model.pagingController!;
                       }
-                      List<ProductRecord> listViewProductRecordList =
-                          snapshot.data!;
-                      return ListView.builder(
-                        padding: EdgeInsets.zero,
-                        shrinkWrap: true,
-                        scrollDirection: Axis.vertical,
-                        itemCount: listViewProductRecordList.length,
-                        itemBuilder: (context, listViewIndex) {
-                          final listViewProductRecord =
-                              listViewProductRecordList[listViewIndex];
-                          return Stack(
-                            children: [
-                              Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    16.0, 0.0, 16.0, 8.0),
-                                child: Container(
-                                  width: double.infinity,
-                                  decoration: BoxDecoration(
-                                    color: FlutterFlowTheme.of(context)
-                                        .secondaryBackground,
-                                    boxShadow: [
-                                      BoxShadow(
-                                        blurRadius: 2.0,
-                                        color: Color(0x520E151B),
-                                        offset: Offset(0.0, 1.0),
-                                      )
-                                    ],
-                                    borderRadius: BorderRadius.circular(12.0),
-                                  ),
-                                  child: InkWell(
-                                    splashColor: Colors.transparent,
-                                    focusColor: Colors.transparent,
-                                    hoverColor: Colors.transparent,
-                                    highlightColor: Colors.transparent,
-                                    onTap: () async {
-                                      logFirebaseEvent(
-                                          'PRODUCT_PAGE_PAGE_Stack_yk2v95bf_ON_TAP');
-                                      logFirebaseEvent('Stack_navigate_to');
 
-                                      context.pushNamed(
-                                        'ProductDetailPage',
-                                        queryParameters: {
-                                          'productRef': serializeParam(
-                                            listViewProductRecord.reference,
-                                            ParamType.DocumentReference,
-                                          ),
-                                        }.withoutNulls,
-                                      );
-                                    },
-                                    child: Stack(
-                                      children: [
-                                        Align(
-                                          alignment:
-                                              AlignmentDirectional(0.0, 0.0),
-                                          child: Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    12.0, 12.0, 12.0, 12.0),
-                                            child: Column(
-                                              mainAxisSize: MainAxisSize.max,
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.center,
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                ClipRRect(
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          10.0),
-                                                  child: Image.network(
-                                                    listViewProductRecord
-                                                        .imageUrl,
-                                                    width: double.infinity,
-                                                    height: 260.0,
-                                                    fit: BoxFit.cover,
-                                                  ),
+                      _model.pagingController =
+                          PagingController(firstPageKey: null);
+                      _model.pagingQuery =
+                          queryBuilder(ProductRecord.collection);
+                      _model.pagingController!
+                          .addPageRequestListener((nextPageMarker) {
+                        queryProductRecordPage(
+                          queryBuilder: (productRecord) => productRecord,
+                          nextPageMarker: nextPageMarker,
+                          pageSize: 25,
+                          isStream: true,
+                        ).then((page) {
+                          _model.pagingController!.appendPage(
+                            page.data,
+                            page.nextPageMarker,
+                          );
+                          final streamSubscription =
+                              page.dataStream?.listen((data) {
+                            data.forEach((item) {
+                              final itemIndexes = _model
+                                  .pagingController!.itemList!
+                                  .asMap()
+                                  .map((k, v) => MapEntry(v.reference.id, k));
+                              final index = itemIndexes[item.reference.id];
+                              final items = _model.pagingController!.itemList!;
+                              if (index != null) {
+                                items.replaceRange(index, index + 1, [item]);
+                                _model.pagingController!.itemList = {
+                                  for (var item in items) item.reference: item
+                                }.values.toList();
+                              }
+                            });
+                            setState(() {});
+                          });
+                          _model.streamSubscriptions.add(streamSubscription);
+                        });
+                      });
+                      return _model.pagingController!;
+                    }(),
+                    padding: EdgeInsets.zero,
+                    shrinkWrap: true,
+                    reverse: false,
+                    scrollDirection: Axis.vertical,
+                    builderDelegate: PagedChildBuilderDelegate<ProductRecord>(
+                      // Customize what your widget looks like when it's loading the first page.
+                      firstPageProgressIndicatorBuilder: (_) => Center(
+                        child: SizedBox(
+                          width: 50.0,
+                          height: 50.0,
+                          child: CircularProgressIndicator(
+                            color: FlutterFlowTheme.of(context).primary,
+                          ),
+                        ),
+                      ),
+
+                      itemBuilder: (context, _, listViewIndex) {
+                        final listViewProductRecord =
+                            _model.pagingController!.itemList![listViewIndex];
+                        return Stack(
+                          children: [
+                            Padding(
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  16.0, 0.0, 16.0, 8.0),
+                              child: Container(
+                                width: double.infinity,
+                                decoration: BoxDecoration(
+                                  color: FlutterFlowTheme.of(context)
+                                      .secondaryBackground,
+                                  boxShadow: [
+                                    BoxShadow(
+                                      blurRadius: 2.0,
+                                      color: Color(0x520E151B),
+                                      offset: Offset(0.0, 1.0),
+                                    )
+                                  ],
+                                  borderRadius: BorderRadius.circular(12.0),
+                                ),
+                                child: InkWell(
+                                  splashColor: Colors.transparent,
+                                  focusColor: Colors.transparent,
+                                  hoverColor: Colors.transparent,
+                                  highlightColor: Colors.transparent,
+                                  onTap: () async {
+                                    logFirebaseEvent(
+                                        'PRODUCT_PAGE_PAGE_Stack_yk2v95bf_ON_TAP');
+                                    logFirebaseEvent('Stack_navigate_to');
+
+                                    context.pushNamed(
+                                      'ProductDetailPage',
+                                      queryParameters: {
+                                        'productRef': serializeParam(
+                                          listViewProductRecord.reference,
+                                          ParamType.DocumentReference,
+                                        ),
+                                      }.withoutNulls,
+                                    );
+                                  },
+                                  child: Stack(
+                                    children: [
+                                      Align(
+                                        alignment:
+                                            AlignmentDirectional(0.0, 0.0),
+                                        child: Padding(
+                                          padding:
+                                              EdgeInsetsDirectional.fromSTEB(
+                                                  12.0, 12.0, 12.0, 12.0),
+                                          child: Column(
+                                            mainAxisSize: MainAxisSize.max,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              ClipRRect(
+                                                borderRadius:
+                                                    BorderRadius.circular(10.0),
+                                                child: Image.network(
+                                                  listViewProductRecord
+                                                      .imageUrl,
+                                                  width: double.infinity,
+                                                  height: 260.0,
+                                                  fit: BoxFit.cover,
                                                 ),
-                                                Padding(
-                                                  padding: EdgeInsetsDirectional
-                                                      .fromSTEB(
-                                                          0.0, 12.0, 0.0, 0.0),
-                                                  child: Row(
-                                                    mainAxisSize:
-                                                        MainAxisSize.max,
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .spaceBetween,
-                                                    children: [
-                                                      Text(
-                                                        listViewProductRecord
-                                                            .name,
-                                                        style:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .bodyLarge,
-                                                      ),
-                                                      Text(
-                                                        listViewProductRecord
-                                                            .price
-                                                            .toString(),
-                                                        style:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .headlineSmall,
-                                                      ),
-                                                    ],
-                                                  ),
+                                              ),
+                                              Padding(
+                                                padding: EdgeInsetsDirectional
+                                                    .fromSTEB(
+                                                        0.0, 12.0, 0.0, 0.0),
+                                                child: Row(
+                                                  mainAxisSize:
+                                                      MainAxisSize.max,
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
+                                                  children: [
+                                                    Text(
+                                                      listViewProductRecord
+                                                          .name,
+                                                      style:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .bodyLarge,
+                                                    ),
+                                                    Text(
+                                                      listViewProductRecord
+                                                          .price
+                                                          .toString(),
+                                                      style:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .headlineSmall,
+                                                    ),
+                                                  ],
                                                 ),
-                                                Padding(
-                                                  padding: EdgeInsetsDirectional
-                                                      .fromSTEB(
-                                                          0.0, 5.0, 0.0, 0.0),
-                                                  child: Text(
-                                                    listViewProductRecord
-                                                        .description,
-                                                    style: FlutterFlowTheme.of(
-                                                            context)
-                                                        .labelMedium,
-                                                  ),
+                                              ),
+                                              Padding(
+                                                padding: EdgeInsetsDirectional
+                                                    .fromSTEB(
+                                                        0.0, 5.0, 0.0, 0.0),
+                                                child: Text(
+                                                  listViewProductRecord
+                                                      .description,
+                                                  style: FlutterFlowTheme.of(
+                                                          context)
+                                                      .labelMedium,
                                                 ),
-                                              ],
-                                            ),
+                                              ),
+                                            ],
                                           ),
                                         ),
-                                        Align(
-                                          alignment:
-                                              AlignmentDirectional(0.98, -1.0),
-                                          child: ToggleIcon(
-                                            onPressed: () async {
-                                              final savedByElement =
-                                                  currentUserUid;
-                                              final savedByUpdate =
-                                                  listViewProductRecord.savedBy
-                                                          .contains(
-                                                              savedByElement)
-                                                      ? FieldValue.arrayRemove(
-                                                          [savedByElement])
-                                                      : FieldValue.arrayUnion(
-                                                          [savedByElement]);
-                                              await listViewProductRecord
-                                                  .reference
-                                                  .update({
-                                                'savedBy': savedByUpdate,
-                                              });
+                                      ),
+                                      Align(
+                                        alignment:
+                                            AlignmentDirectional(0.98, -1.0),
+                                        child: ToggleIcon(
+                                          onPressed: () async {
+                                            final savedByElement =
+                                                currentUserUid;
+                                            final savedByUpdate =
+                                                listViewProductRecord.savedBy
+                                                        .contains(
+                                                            savedByElement)
+                                                    ? FieldValue.arrayRemove(
+                                                        [savedByElement])
+                                                    : FieldValue.arrayUnion(
+                                                        [savedByElement]);
+                                            await listViewProductRecord
+                                                .reference
+                                                .update({
+                                              'savedBy': savedByUpdate,
+                                            });
+                                            logFirebaseEvent(
+                                                'PRODUCT_ToggleIcon_ewzuxefb_ON_TOGGLE');
+                                            if (loggedIn) {
+                                              // get The Product Id
                                               logFirebaseEvent(
-                                                  'PRODUCT_ToggleIcon_ewzuxefb_ON_TOGGLE');
-                                              if (loggedIn) {
-                                                // get The Product Id
+                                                  'ToggleIcon_update_app_state');
+                                              setState(() {
+                                                FFAppState().favoriteProd =
+                                                    listViewProductRecord
+                                                        .reference;
+                                              });
+                                              if (listViewProductRecord.savedBy
+                                                  .contains(currentUserUid)) {
                                                 logFirebaseEvent(
-                                                    'ToggleIcon_update_app_state');
-                                                setState(() {
-                                                  FFAppState().favoriteProd =
-                                                      listViewProductRecord
-                                                          .reference;
+                                                    'ToggleIcon_backend_call');
+
+                                                await listViewProductRecord
+                                                    .reference
+                                                    .update({
+                                                  'savedBy':
+                                                      FieldValue.arrayRemove(
+                                                          [currentUserUid]),
                                                 });
-                                                if (listViewProductRecord
-                                                    .savedBy
-                                                    .contains(currentUserUid)) {
-                                                  logFirebaseEvent(
-                                                      'ToggleIcon_backend_call');
-
-                                                  await listViewProductRecord
-                                                      .reference
-                                                      .update({
-                                                    'savedBy':
-                                                        FieldValue.arrayRemove(
-                                                            [currentUserUid]),
-                                                  });
-                                                  logFirebaseEvent(
-                                                      'ToggleIcon_backend_call');
-                                                  await FFAppState()
-                                                      .favoriteProd!
-                                                      .delete();
-                                                  return;
-                                                } else {
-                                                  logFirebaseEvent(
-                                                      'ToggleIcon_backend_call');
-
-                                                  await listViewProductRecord
-                                                      .reference
-                                                      .update({
-                                                    'savedBy':
-                                                        FieldValue.arrayUnion(
-                                                            [currentUserUid]),
-                                                  });
-                                                  logFirebaseEvent(
-                                                      'ToggleIcon_backend_call');
-
-                                                  await FavoriteProductRecord
-                                                      .collection
-                                                      .doc()
-                                                      .set({
-                                                    ...createFavoriteProductRecordData(
-                                                      userId: currentUserUid,
-                                                      productRef:
-                                                          listViewProductRecord
-                                                              .reference,
-                                                    ),
-                                                    'creationDate': FieldValue
-                                                        .serverTimestamp(),
-                                                  });
-                                                  return;
-                                                }
+                                                logFirebaseEvent(
+                                                    'ToggleIcon_backend_call');
+                                                await FFAppState()
+                                                    .favoriteProd!
+                                                    .delete();
+                                                return;
                                               } else {
                                                 logFirebaseEvent(
-                                                    'ToggleIcon_show_snack_bar');
-                                                ScaffoldMessenger.of(context)
-                                                    .showSnackBar(
-                                                  SnackBar(
-                                                    content: Text(
-                                                      'Connect You First',
-                                                      style: TextStyle(
-                                                        color:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .primaryText,
-                                                      ),
-                                                    ),
-                                                    duration: Duration(
-                                                        milliseconds: 4000),
-                                                    backgroundColor:
-                                                        FlutterFlowTheme.of(
-                                                                context)
-                                                            .secondary,
+                                                    'ToggleIcon_backend_call');
+
+                                                await listViewProductRecord
+                                                    .reference
+                                                    .update({
+                                                  'savedBy':
+                                                      FieldValue.arrayUnion(
+                                                          [currentUserUid]),
+                                                });
+                                                logFirebaseEvent(
+                                                    'ToggleIcon_backend_call');
+
+                                                await FavoriteProductRecord
+                                                    .collection
+                                                    .doc()
+                                                    .set({
+                                                  ...createFavoriteProductRecordData(
+                                                    userId: currentUserUid,
+                                                    productRef:
+                                                        listViewProductRecord
+                                                            .reference,
                                                   ),
-                                                );
+                                                  'creationDate': FieldValue
+                                                      .serverTimestamp(),
+                                                });
                                                 return;
                                               }
-                                            },
-                                            value: listViewProductRecord.savedBy
-                                                .contains(currentUserUid),
-                                            onIcon: Icon(
-                                              Icons.favorite,
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .primary,
-                                              size: 25.0,
-                                            ),
-                                            offIcon: Icon(
-                                              Icons.favorite_border,
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .secondaryText,
-                                              size: 25.0,
-                                            ),
+                                            } else {
+                                              logFirebaseEvent(
+                                                  'ToggleIcon_show_snack_bar');
+                                              ScaffoldMessenger.of(context)
+                                                  .showSnackBar(
+                                                SnackBar(
+                                                  content: Text(
+                                                    'Connect You First',
+                                                    style: TextStyle(
+                                                      color:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .primaryText,
+                                                    ),
+                                                  ),
+                                                  duration: Duration(
+                                                      milliseconds: 4000),
+                                                  backgroundColor:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .secondary,
+                                                ),
+                                              );
+                                              return;
+                                            }
+                                          },
+                                          value: listViewProductRecord.savedBy
+                                              .contains(currentUserUid),
+                                          onIcon: Icon(
+                                            Icons.favorite,
+                                            color: FlutterFlowTheme.of(context)
+                                                .primary,
+                                            size: 25.0,
+                                          ),
+                                          offIcon: Icon(
+                                            Icons.favorite_border,
+                                            color: FlutterFlowTheme.of(context)
+                                                .secondaryText,
+                                            size: 25.0,
                                           ),
                                         ),
-                                      ],
-                                    ),
+                                      ),
+                                    ],
                                   ),
                                 ),
                               ),
-                            ],
-                          );
-                        },
-                      );
-                    },
+                            ),
+                          ],
+                        );
+                      },
+                    ),
                   );
                 }),
               );
