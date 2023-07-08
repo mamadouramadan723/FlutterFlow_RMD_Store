@@ -57,7 +57,10 @@ class _ProductPageWidgetState extends State<ProductPageWidget> {
           backgroundColor: FlutterFlowTheme.of(context).primary,
           automaticallyImplyLeading: false,
           title: Text(
-            'Page Title',
+            valueOrDefault<String>(
+              widget.subCategoryRef?.id,
+              'Product',
+            ),
             style: FlutterFlowTheme.of(context).headlineMedium.override(
                   fontFamily: 'Outfit',
                   color: Colors.white,
