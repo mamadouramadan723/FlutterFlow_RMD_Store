@@ -244,7 +244,7 @@ class _ProductPageWidgetState extends State<ProductPageWidget> {
                                         ),
                                         Align(
                                           alignment:
-                                              AlignmentDirectional(0.98, -1.0),
+                                              AlignmentDirectional(1.0, -1.0),
                                           child: ToggleIcon(
                                             onPressed: () async {
                                               final savedByElement =
@@ -347,7 +347,8 @@ class _ProductPageWidgetState extends State<ProductPageWidget> {
                                                 return;
                                               }
                                             },
-                                            value: listViewProductRecord.savedBy
+                                            value: !listViewProductRecord
+                                                .savedBy
                                                 .contains(currentUserUid),
                                             onIcon: Icon(
                                               Icons.favorite,
