@@ -86,6 +86,16 @@ class ProductRecord extends FirestoreRecord {
   String get imageUrl => _imageUrl ?? '';
   bool hasImageUrl() => _imageUrl != null;
 
+  // "creationDate" field.
+  DateTime? _creationDate;
+  DateTime? get creationDate => _creationDate;
+  bool hasCreationDate() => _creationDate != null;
+
+  // "modificationDate" field.
+  DateTime? _modificationDate;
+  DateTime? get modificationDate => _modificationDate;
+  bool hasModificationDate() => _modificationDate != null;
+
   void _initializeFields() {
     _id = castToType<int>(snapshotData['id']);
     _name = snapshotData['name'] as String?;
@@ -101,6 +111,8 @@ class ProductRecord extends FirestoreRecord {
     _storePlace = PlaceStruct.maybeFromMap(snapshotData['storePlace']);
     _savedBy = getDataList(snapshotData['savedBy']);
     _imageUrl = snapshotData['imageUrl'] as String?;
+    _creationDate = snapshotData['creationDate'] as DateTime?;
+    _modificationDate = snapshotData['modificationDate'] as DateTime?;
   }
 
   static CollectionReference get collection =>
@@ -149,6 +161,8 @@ Map<String, dynamic> createProductRecordData({
   RatingStruct? rating,
   PlaceStruct? storePlace,
   String? imageUrl,
+  DateTime? creationDate,
+  DateTime? modificationDate,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
@@ -163,6 +177,8 @@ Map<String, dynamic> createProductRecordData({
       'rating': RatingStruct().toMap(),
       'storePlace': PlaceStruct().toMap(),
       'imageUrl': imageUrl,
+      'creationDate': creationDate,
+      'modificationDate': modificationDate,
     }.withoutNulls,
   );
 
@@ -194,7 +210,9 @@ class ProductRecordDocumentEquality implements Equality<ProductRecord> {
         e1?.rating == e2?.rating &&
         e1?.storePlace == e2?.storePlace &&
         listEquality.equals(e1?.savedBy, e2?.savedBy) &&
-        e1?.imageUrl == e2?.imageUrl;
+        e1?.imageUrl == e2?.imageUrl &&
+        e1?.creationDate == e2?.creationDate &&
+        e1?.modificationDate == e2?.modificationDate;
   }
 
   @override
@@ -212,7 +230,9 @@ class ProductRecordDocumentEquality implements Equality<ProductRecord> {
         e?.rating,
         e?.storePlace,
         e?.savedBy,
-        e?.imageUrl
+        e?.imageUrl,
+        e?.creationDate,
+        e?.modificationDate
       ]);
 
   @override
