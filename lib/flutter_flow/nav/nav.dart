@@ -148,6 +148,8 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           builder: (context, params) => ProductPageWidget(
             subCategoryRef: params.getParam('subCategoryRef',
                 ParamType.DocumentReference, false, ['subCategory']),
+            subCategoryName:
+                params.getParam('subCategoryName', ParamType.String),
           ),
         ),
         FFRoute(

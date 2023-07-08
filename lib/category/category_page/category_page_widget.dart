@@ -435,6 +435,12 @@ class _CategoryPageWidgetState extends State<CategoryPageWidget> {
                                                                 ParamType
                                                                     .DocumentReference,
                                                               ),
+                                                              'subCategoryName':
+                                                                  serializeParam(
+                                                                '',
+                                                                ParamType
+                                                                    .String,
+                                                              ),
                                                             }.withoutNulls,
                                                           );
                                                         },

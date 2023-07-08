@@ -15,9 +15,12 @@ class ProductPageWidget extends StatefulWidget {
   const ProductPageWidget({
     Key? key,
     this.subCategoryRef,
-  }) : super(key: key);
+    String? subCategoryName,
+  })  : this.subCategoryName = subCategoryName ?? 'Product',
+        super(key: key);
 
   final DocumentReference? subCategoryRef;
+  final String subCategoryName;
 
   @override
   _ProductPageWidgetState createState() => _ProductPageWidgetState();
@@ -48,8 +51,11 @@ class _ProductPageWidgetState extends State<ProductPageWidget> {
   Widget build(BuildContext context) {
     context.watch<FFAppState>();
 
-    return StreamBuilder<SubCategoryRecord>(
-      stream: SubCategoryRecord.getDocument(widget.subCategoryRef!),
+    return StreamBuilder<List<FavoriteProductRecord>>(
+      stream: queryFavoriteProductRecord(
+        queryBuilder: (favoriteProductRecord) =>
+            favoriteProductRecord.where('userId', isEqualTo: currentUserUid),
+      ),
       builder: (context, snapshot) {
         // Customize what your widget looks like when it's loading.
         if (!snapshot.hasData) {
@@ -66,7 +72,8 @@ class _ProductPageWidgetState extends State<ProductPageWidget> {
             ),
           );
         }
-        final productPageSubCategoryRecord = snapshot.data!;
+        List<FavoriteProductRecord> productPageFavoriteProductRecordList =
+            snapshot.data!;
         return GestureDetector(
           onTap: () => FocusScope.of(context).requestFocus(_model.unfocusNode),
           child: Scaffold(
@@ -76,7 +83,7 @@ class _ProductPageWidgetState extends State<ProductPageWidget> {
               backgroundColor: FlutterFlowTheme.of(context).primary,
               automaticallyImplyLeading: false,
               title: Text(
-                productPageSubCategoryRecord.name,
+                widget.subCategoryName,
                 style: FlutterFlowTheme.of(context).headlineMedium.override(
                       fontFamily: 'Outfit',
                       color: Colors.white,
