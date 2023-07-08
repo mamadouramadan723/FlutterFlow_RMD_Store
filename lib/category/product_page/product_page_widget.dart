@@ -12,7 +12,12 @@ import 'product_page_model.dart';
 export 'product_page_model.dart';
 
 class ProductPageWidget extends StatefulWidget {
-  const ProductPageWidget({Key? key}) : super(key: key);
+  const ProductPageWidget({
+    Key? key,
+    this.subCategoryRef,
+  }) : super(key: key);
+
+  final DocumentReference? subCategoryRef;
 
   @override
   _ProductPageWidgetState createState() => _ProductPageWidgetState();
@@ -92,7 +97,11 @@ class _ProductPageWidgetState extends State<ProductPageWidget> {
                   final columnFavoriteProductRecord =
                       columnFavoriteProductRecordList[columnIndex];
                   return StreamBuilder<List<ProductRecord>>(
-                    stream: queryProductRecord(),
+                    stream: queryProductRecord(
+                      queryBuilder: (productRecord) => productRecord.where(
+                          'subCategoryRef',
+                          isEqualTo: widget.subCategoryRef),
+                    ),
                     builder: (context, snapshot) {
                       // Customize what your widget looks like when it's loading.
                       if (!snapshot.hasData) {
