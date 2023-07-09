@@ -384,6 +384,7 @@ class _CategoryPageWidgetState extends State<CategoryPageWidget> {
                                                     mainAxisSpacing: 10.0,
                                                     childAspectRatio: 1.0,
                                                   ),
+                                                  primary: false,
                                                   shrinkWrap: true,
                                                   scrollDirection:
                                                       Axis.vertical,
