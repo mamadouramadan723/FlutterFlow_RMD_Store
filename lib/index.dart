@@ -17,3 +17,5 @@ export '/category/product_detail_page/product_detail_page_widget.dart'
 export '/category/product_page/product_page_widget.dart' show ProductPageWidget;
 export '/category/category_page/category_page_widget.dart'
     show CategoryPageWidget;
+export '/prod_page/prod_page_widget.dart' show ProdPageWidget;
+export '/menu/menu_widget.dart' show MenuWidget;

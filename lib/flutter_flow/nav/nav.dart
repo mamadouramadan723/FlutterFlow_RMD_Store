@@ -158,6 +158,16 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           builder: (context, params) => params.isEmpty
               ? NavBarPage(initialPage: 'CategoryPage')
               : CategoryPageWidget(),
+        ),
+        FFRoute(
+          name: 'ProdPage',
+          path: '/prodPage',
+          builder: (context, params) => ProdPageWidget(),
+        ),
+        FFRoute(
+          name: 'Menu',
+          path: '/menu',
+          builder: (context, params) => MenuWidget(),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );

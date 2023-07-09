@@ -122,6 +122,7 @@ class _ProductPageWidgetState extends State<ProductPageWidget> {
                           snapshot.data!;
                       return ListView.builder(
                         padding: EdgeInsets.zero,
+                        primary: false,
                         shrinkWrap: true,
                         scrollDirection: Axis.vertical,
                         itemCount: listViewProductRecordList.length,
@@ -347,8 +348,7 @@ class _ProductPageWidgetState extends State<ProductPageWidget> {
                                                 return;
                                               }
                                             },
-                                            value: !listViewProductRecord
-                                                .savedBy
+                                            value: listViewProductRecord.savedBy
                                                 .contains(currentUserUid),
                                             onIcon: Icon(
                                               Icons.favorite,

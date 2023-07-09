@@ -12,6 +12,7 @@ import 'schema/sub_category_record.dart';
 import 'schema/favorite_product_record.dart';
 import 'schema/user_record.dart';
 import 'schema/rating_record.dart';
+import 'schema/classe_record.dart';
 
 export 'dart:async' show StreamSubscription;
 export 'package:cloud_firestore/cloud_firestore.dart';
@@ -26,6 +27,7 @@ export 'schema/sub_category_record.dart';
 export 'schema/favorite_product_record.dart';
 export 'schema/user_record.dart';
 export 'schema/rating_record.dart';
+export 'schema/classe_record.dart';
 
 /// Functions to query ProductRecords (as a Stream and as a Future).
 Future<int> queryProductRecordCount({
@@ -385,6 +387,58 @@ Future<FFFirestorePage<RatingRecord>> queryRatingRecordPage({
     queryCollectionPage(
       RatingRecord.collection,
       RatingRecord.fromSnapshot,
+      queryBuilder: queryBuilder,
+      nextPageMarker: nextPageMarker,
+      pageSize: pageSize,
+      isStream: isStream,
+    );
+
+/// Functions to query ClasseRecords (as a Stream and as a Future).
+Future<int> queryClasseRecordCount({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+}) =>
+    queryCollectionCount(
+      ClasseRecord.collection,
+      queryBuilder: queryBuilder,
+      limit: limit,
+    );
+
+Stream<List<ClasseRecord>> queryClasseRecord({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+  bool singleRecord = false,
+}) =>
+    queryCollection(
+      ClasseRecord.collection,
+      ClasseRecord.fromSnapshot,
+      queryBuilder: queryBuilder,
+      limit: limit,
+      singleRecord: singleRecord,
+    );
+
+Future<List<ClasseRecord>> queryClasseRecordOnce({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+  bool singleRecord = false,
+}) =>
+    queryCollectionOnce(
+      ClasseRecord.collection,
+      ClasseRecord.fromSnapshot,
+      queryBuilder: queryBuilder,
+      limit: limit,
+      singleRecord: singleRecord,
+    );
+
+Future<FFFirestorePage<ClasseRecord>> queryClasseRecordPage({
+  Query Function(Query)? queryBuilder,
+  DocumentSnapshot? nextPageMarker,
+  required int pageSize,
+  required bool isStream,
+}) =>
+    queryCollectionPage(
+      ClasseRecord.collection,
+      ClasseRecord.fromSnapshot,
       queryBuilder: queryBuilder,
       nextPageMarker: nextPageMarker,
       pageSize: pageSize,
