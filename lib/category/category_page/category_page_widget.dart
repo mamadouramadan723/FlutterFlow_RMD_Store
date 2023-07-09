@@ -308,6 +308,7 @@ class _CategoryPageWidgetState extends State<CategoryPageWidget> {
                                 listViewItemCategoryRecordList = snapshot.data!;
                             return ListView.builder(
                               padding: EdgeInsets.zero,
+                              primary: false,
                               shrinkWrap: true,
                               scrollDirection: Axis.vertical,
                               itemCount: listViewItemCategoryRecordList.length,
